@@ -65,15 +65,15 @@ function confirmarDonacion(event) {
 
     setTimeout(() => {
         mostrarAlerta("✅ Donación aprobada. ¡Gracias!");
-    }, 3000);
+    }, 1000);
 
     setTimeout(() => {
         document.getElementById("btnDescargarPDF").style.display = "inline-block";
-    }, 3000);
+    }, 1000);
 
     setTimeout(() => {
         mostrarAlerta("🔑 Envia el código de compra a fundacionfelices@gmail.com para comprobar tu donación");
-    }, 6000);
+    }, 4000);
 
     return true;
 }
