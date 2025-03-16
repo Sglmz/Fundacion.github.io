@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donación para Niños</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>¿Desea donar $1 a la Fundación Niños Felices?</h2>
+        <button onclick="mostrarFormulario()">Donar Ahora</button>
+        <div id="formulario" class="hidden">
+            <h3>Ingrese los datos de su tarjeta</h3>
+            <form onsubmit="return confirmarDonacion(event)">
+                <input type="text" id="tarjeta" placeholder="Número de Tarjeta" maxlength="19" required oninput="formatearTarjeta(this)">
+                <input type="text" id="fecha" placeholder="Fecha de Vencimiento (MM/AA)" maxlength="5" required oninput="validarFecha(this)">
+                <input type="text" id="cvv" placeholder="CVV" maxlength="3" required oninput="validarCVV(this)">
+                <button type="submit">Confirmar Donación</button>
+            </form>
+            <p id="error-msg" class="error hidden"></p>
+        </div>
+        <button id="btnDescargarPDF" onclick="generarPDF()" style="display:none;">Descargar comprobante (PFD)</button>
+        <button id="btnDescargar" onclick="descargarDatos()" style="display:none;">Descargar Datos Donación</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

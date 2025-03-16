@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desencriptar Código</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 14px;
+            resize: none;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #contenidoDesencriptado {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Desencriptar Tarjeta</h2>
+
+<!-- Campo para pegar el código encriptado -->
+<textarea id="codigoEncriptado" placeholder="Pega aquí el código encriptado"></textarea>
+<br>
+<button onclick="desencriptarCodigo()">Desencriptar</button>
+
+<!-- Contenedor para mostrar el contenido desencriptado -->
+<div id="contenidoDesencriptado"></div>
+
+<script>
+    document.getElementById("codigoEncriptado").addEventListener("input", function () {
+        // Remueve espacios en tiempo real
+        this.value = this.value.replace(/\s/g, "");
+    });
+
+    // Función para desencriptar los datos usando la clave secreta
+    function desencriptarCodigo() {
+        const claveSecreta = 'MiClaveSegura123'; // Debe ser la misma clave que se usó para encriptar
+        const codigoEncriptado = document.getElementById('codigoEncriptado').value;
+
+        if (!codigoEncriptado) {
+            alert("Ingresa el código");
+            return;
+        }
+
+        try {
+            // Intentar desencriptar el código
+            const bytes = CryptoJS.AES.decrypt(codigoEncriptado, claveSecreta);
+            const contenidoDesencriptado = bytes.toString(CryptoJS.enc.Utf8);
+
+            if (!contenidoDesencriptado) {
+                throw new Error("Código inválido o clave incorrecta.");
+            }
+
+            // Mostrar el contenido desencriptado
+            document.getElementById('contenidoDesencriptado').textContent = "Contenido Desencriptado:\n" + contenidoDesencriptado;
+            document.getElementById('contenidoDesencriptado').style.display = "block";
+
+        } catch (error) {
+            alert("Error al desencriptar: Código inválido o clave incorrecta");
+            console.error("Error al desencriptar:", error);
+        }
+    }
+</script>
+
+</body>
+</html>
