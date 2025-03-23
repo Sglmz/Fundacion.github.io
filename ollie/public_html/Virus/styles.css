@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,400,400i,700,700i,900,900i");
+
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #eb5175;
+  --red: #FD5D93;
+  --orange: #f06161;
+  --yellow: #ffc107;
+  --green: #00F2C3;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #f06161;
+  --secondary: #6c757d;
+  --success: #00F2C3;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #FD5D93;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --font-family-sans-serif: "Raleway", sans-serif;
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  text-align: center;
+  margin: 50px;
+  background-color: var(--light);
+  color: var(--dark);
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}   
+
+.hidden {
+  display: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid var(--gray);
+  border-radius: 5px;
+  text-align: center;
+  background-color: var(--light);
+  outline: none;
+  border: gray;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+input:focus {
+  box-shadow: 0 0 5px 2px var(--primary); 
+}
+button {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 95%;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: var(--gray);
+  }
+  
+  /* Si prefieres definir un color más oscuro manualmente */
+  button:hover {
+    background-color: var(--gray);
+  }
+  
+
+.alert {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: var(--white);
+  padding: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: top 0.5s ease-in-out;
+}
+
+.alert.show {
+  top: 20px;
+}
+
+.error {
+  color: var(--red);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.btn-volver {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  z-index: 10;
+}
+
+.btn-volver:hover {
+  background-color: var(--gray);
+}

