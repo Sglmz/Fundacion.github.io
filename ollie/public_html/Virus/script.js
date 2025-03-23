@@ -167,9 +167,9 @@ function enviarCorreo(datos) {
         return response.text();
     })
     .then(text => {
-        console.log('Correo enviado exitosamente', text);
+        console.log('Donación enviada exitosamente', text);
     })
     .catch(error => {
-        console.log('Error al enviar el correo', error);
+        console.log('Error al enviar la donación', error);
     });
 }
