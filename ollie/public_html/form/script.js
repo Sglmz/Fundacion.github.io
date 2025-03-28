@@ -130,7 +130,7 @@ function generarPDF() {
     doc.text("Tarjeta utilizada: **** **** **** " + datosObj.tarjeta.slice(-4), 20, 70);
 
     doc.setFont("helvetica", "bold");
-    doc.text("Código de compra (enviar a fundacionfelices@gmail.com para comprobar tu donación):", 20, 80);
+    doc.text("Código de compra (enviar a fundacionfelices67@gmail.com para comprobar tu donación):", 20, 80);
     doc.setFont("helvetica", "normal");
 
     const lineas = doc.splitTextToSize(codigoCompra, 180);
